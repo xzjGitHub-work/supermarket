@@ -1,20 +1,59 @@
 package com.mingrisoft.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.mingrisoft.bean.Depot;
 import com.mingrisoft.bean.Dept;
 import com.mingrisoft.bean.Provide;
+import com.mingrisoft.model.DepotModel;
 
 public class DeptDao {
+
+	//创建对象的时候 已经注册驱动了
+	static GetConnection connection = new GetConnection();
+
+	public static void main(String[] args) throws Exception {
+
+		//查询的
+		Connection select = connection.getCon();//获取链接
+		ResultSet rest = select.createStatement().executeQuery("select * from tb_dept");//执行sql语句
+		while (rest.next()) {
+			//根据字段名获取
+			System.out.println(rest.getObject("id"));
+			System.out.println(rest.getObject("dName"));
+			System.out.println(rest.getObject("principal"));
+			System.out.println(rest.getObject("bewrite"));
+			//根据列索引获取
+			System.out.println(rest.getInt(1));
+			System.out.println(rest.getString(2));
+			System.out.println(rest.getString(3));
+			System.out.println(rest.getString(4));
+		}
+		//添加
+		Connection add = connection.getCon();//获取链接
+		PreparedStatement statement = add.prepareStatement("insert into tb_dept (dName,principal,bewrite) values(?,?,?)");
+		statement.setString(1,"1");
+		statement.setString(2,"2");
+		statement.setString(3,"3");
+		statement.executeUpdate();
+
+		//修改
+		Connection update = connection.getCon();//获取链接
+		PreparedStatement statementUpdate = update.prepareStatement("update tb_dept set dName = ?,principal = ?,bewrite=? where id =?");
+		statementUpdate.setString(1,"111");
+		statementUpdate.setString(2,"222");
+		statementUpdate.setString(3,"333");
+		statementUpdate.setString(4,"4");
+
+		//update tb_dept set dName = 111,principal = 222,bewrite=333 where id =4
+		statementUpdate.executeUpdate();
+
+	}
 	// ������Ӳ�����Ϣ����
-	GetConnection connection = new GetConnection();		//
 	Connection conn = null;
 	public void insertDept(Dept dept) {
 		conn = connection.getCon();

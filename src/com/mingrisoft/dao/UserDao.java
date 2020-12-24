@@ -5,24 +5,24 @@ import com.mingrisoft.bean.User;
 public class UserDao {
 GetConnection connection = new GetConnection();
 Connection conn = null;
-//±àĞ´°´ÓÃ»§ÃûÃÜÂë²éÑ¯ÓÃ»§·½·¨
+//ç¼–å†™æŒ‰ç”¨æˆ·åå¯†ç æŸ¥è¯¢ç”¨æˆ·æ–¹æ³•
 public User getUser(String userName,String passWord){
-	User user = new User();				//´´½¨JavaBean¶ÔÏó
-	conn = connection.getCon();			//»ñÈ¡Êı¾İ¿âÁ¬½Ó
+	User user = new User();				//åˆ›å»ºJavaBeanå¯¹è±¡
+	conn = connection.getCon();			//è·å–æ•°æ®åº“è¿æ¥
 	try {
-		String sql = "select * from tb_users where userName = ? and passWord = ?";	//¶¨Òå²éÑ¯Ô¤´¦ÀíÓï¾ä
-		PreparedStatement statement = conn.prepareStatement(sql);		//ÊµÀı»¯PreparedStatement¶ÔÏó
-		statement.setString(1, userName);			//ÉèÖÃÔ¤´¦ÀíÓï¾ä²ÎÊı
+		String sql = "select * from tb_users where userName = ? and passWord = ?";	//å®šä¹‰æŸ¥è¯¢é¢„å¤„ç†è¯­å¥
+		PreparedStatement statement = conn.prepareStatement(sql);		//å®ä¾‹åŒ–PreparedStatementå¯¹è±¡
+		statement.setString(1, userName);			//è®¾ç½®é¢„å¤„ç†è¯­å¥å‚æ•°
 		statement.setString(2, passWord);
-		ResultSet rest = statement.executeQuery();	//Ö´ĞĞÔ¤´¦ÀíÓï¾ä
+		ResultSet rest = statement.executeQuery();	//æ‰§è¡Œé¢„å¤„ç†è¯­å¥
 		while(rest.next()){
-			user.setId(rest.getInt(1));				//Ó¦ÓÃ²éÑ¯½á¹ûÉèÖÃ¶ÔÏóÊôĞÔ
+			user.setId(rest.getInt(1));				//åº”ç”¨æŸ¥è¯¢ç»“æœè®¾ç½®å¯¹è±¡å±æ€§
 			user.setUserName(rest.getString(2));
 			user.setPassWord(rest.getString(3));
 		}
 	} catch (SQLException e) {			
 		e.printStackTrace();
 	}		
-	return user;						//·µ»Ø²éÑ¯½á¹û
+	return user;						//è¿”å›æŸ¥è¯¢ç»“æœ
 }	
 }
