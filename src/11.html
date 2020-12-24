@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <base href="http://180.213.8.245:65357/spgw"/>
+    <title>合同签署</title>
+    <link rel="stylesheet" type="text/css" href="http://180.213.8.245:65357/spgw/css/index.css"/>
+    <script type="text/javascript" src="http://180.213.8.245:65357/spgw/js/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" src="http://180.213.8.245:65357/spgw/pdfjs/web/viewer.js"></script>
+    <script src="http://180.213.8.245:65357/spgw/pdfjs/build/pdf.js"></script>
+    <script type="text/javascript">        var pdfUrl = "";
+    var initPdf = "";
+    $(function () {
+        var userAgent = window.navigator.userAgent;
+        var isChrome = userAgent.indexOf("Chrome") > -1 && userAgent.indexOf("Safari") > -1;
+        if (!isChrome) {
+            alert("请使用谷歌浏览器，其他浏览器因为兼容性问题可能导致盖章失败。")
+        }
+        var attachmentPath = $('#attachmentPath').val();
+        var myIframe = $("#myIframe");
+        var win = myIframe[0].window || myIframe[0].contentWindow;
+        myIframe.on('load', function () {
+            var msg1 = {
+                method: 'XSSetLicense',
+                param: 'xzu3X6dlBVyaBPw9L0eWazAXRbXsuXEn0y5DMEGbYXc8GLWYF8l7I6Xs1Z/seq2bkoNnomhWOmCRwtQMmdB1/kfI/E6GsKvL38o='
+            };
+            win.postMessage(msg1, '*');
+            var msg2 = {method: 'XSSetServerUrl', param: 'http://180.213.8.245:65357/spgw'};
+            win.postMessage(msg2, '*');
+            var msg3 = {method: 'XSSetIsKey', param: '1'};
+            win.postMessage(msg3, '*');
+            var msg4 = {method: 'XSOpenFile', param: attachmentPath};
+            win.postMessage(msg4, '*');
+        });
+        $(".docbox_input_btn").css("display", "block");
+        $("#myIframe").css("display", "block");
+    });
+    window.addEventListener('message', function (e) {
+        if (!e.data) {
+            return;
+        }
+        if (e.data.act == 'XSGetPdfUrl') {
+            pdfUrl = e.data.msg;
+            if (initPdf == "") {
+                initPdf = e.data.msg;
+            }
+        }
+    }, true);
+
+    function getinfo() {
+        var myIframe = $("#myIframe");
+        var win = myIframe[0].window || myIframe[0].contentWindow;
+        var msg1 = {method: 'XSGetPdfUrl', param: ''};
+        win.postMessage(msg1, '*');
+    }
+
+    var t = window.setInterval(getinfo, 1000);
+
+    function newStep() {
+        if (pdfUrl == "") {
+            getinfo();
+        }
+        if (confirm("确定要进行此操作吗？\n合同签署完成，无法更改")) {
+            if (pdfUrl == "" || initPdf == pdfUrl) {
+                alert("请点击控件上的'签章'签署后\n或等待签章显示后再点击‘签署完成’");
+                return;
+            }
+            $('#pdfUrl').val(pdfUrl);
+            clearInterval(t);
+            var url = 'http://180.213.8.245:65357/spgw/signFinished';
+            $('form').attr('action', url);
+            $('form').submit();
+        }
+    }    </script>
+</head>
+<body>
+<form method="post" action="">
+    <div class="main"><input type="hidden" id="id" name="id" value="5fe4502e37cc44affc5e5322"/> <input type="hidden"
+                                                                                                       id="attachmentPath"
+                                                                                                       name="attachmentPath"
+                                                                                                       value="attachs/contracts/20190524960267/5fd9882a37cce90303f52543/2020/12/24/5fe4517b37cc44affc5e5325.pdf"/>
+        <input type="hidden" id="signinfo" name="signinfo" value="5fd9882a37cce90303f52543"/> <input type="hidden"
+                                                                                                     id="appId"
+                                                                                                     name="appId"
+                                                                                                     value="20190524960267"/>
+        <input type="hidden" id="redirectUrl" name="redirectUrl"
+               value="http://172.16.66.164/api/api/contract/contractCallBackUpdateState.shtml"/> <input type="hidden"
+                                                                                                        id="pdfUrl"
+                                                                                                        name="pdfUrl"
+                                                                                                        value=""/>
+        <iframe id="myIframe" src="http://180.213.8.245:65357/spgw/pdfjs/web/viewer.html" width='100%' height='490'
+                style="display: none;"></iframe>
+        <div class="docbox_input_btns"><input type="button" class="docbox_input_btn" onclick="newStep()" value="签署并发送"/>
+            <span class="error"></span> <span>·首次使用请您先安装<a
+                    href="http://180.213.8.245:65357/spgw/tools/share-sun-tools.zip"
+                    style="color: blue;">“翔晟PDF签章控件”</a>！</span></div>
+    </div>
+</form>
+</body>
+</html>
