@@ -5,6 +5,7 @@ public class Dept {
 	private String dName;
 	private String principal;
 	private String bewrite;
+	private int indexNumber;
 	public int getId() {
 		return id;
 	}
@@ -29,5 +30,23 @@ public class Dept {
 	public void setBewrite(String bewrite) {
 		this.bewrite = bewrite;
 	}
-	
+
+	public int getIndexNumber() {
+		return indexNumber;
+	}
+
+	public void setIndexNumber(int indexNumber) {
+		this.indexNumber = indexNumber;
+	}
+
+	@Override
+	public String toString() {
+		return "Dept{" +
+				"id=" + id +
+				", dName='" + dName + '\'' +
+				", principal='" + principal + '\'' +
+				", bewrite='" + bewrite + '\'' +
+				", indexNumber=" + indexNumber +
+				'}';
+	}
 }

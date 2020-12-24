@@ -111,7 +111,8 @@ public class DeptPanel extends JPanel {
 		List list = dao.selectDept();
 		for (int i = 0; i < list.size(); i++) {
 			Dept dept = (Dept)list.get(i);
-			model.addRow(new Object[] {dept.getId(),dept.getdName(),dept.getPrincipal(),dept.getBewrite()});
+			System.out.println(dept);
+			model.addRow(new Object[] {dept.getIndexNumber(),dept.getdName(),dept.getPrincipal(),dept.getBewrite()});
 		}
 		scrollPane.setViewportView(table_1);
 		JButton insertButton = new JButton("添加");

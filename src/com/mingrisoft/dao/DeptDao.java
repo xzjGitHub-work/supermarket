@@ -13,14 +13,14 @@ import com.mingrisoft.bean.Dept;
 import com.mingrisoft.bean.Provide;
 
 public class DeptDao {
-	// ¶¨ÒåÌí¼Ó²¿ÃÅÐÅÏ¢·½·¨
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó²ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½
 	GetConnection connection = new GetConnection();		//
 	Connection conn = null;
 	public void insertDept(Dept dept) {
 		conn = connection.getCon();
 		try {
 			PreparedStatement statement = conn
-					.prepareStatement("insert into tb_dept values(?,?,?)");
+					.prepareStatement("insert into tb_dept (dName,principal,bewrite) values(?,?,?)");
 			statement.setString(1,dept.getdName());
 			statement.setString(2, dept.getPrincipal());
 			statement.setString(3, dept.getBewrite());		
@@ -29,28 +29,30 @@ public class DeptDao {
 			e.printStackTrace();
 		}
 	}
-	// ¶¨Òå²éÑ¯²¿ÃÅ±íÖÐÈ«²¿Êý¾Ý·½·¨
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½Å±ï¿½ï¿½ï¿½È«ï¿½ï¿½ï¿½ï¿½ï¿½Ý·ï¿½ï¿½ï¿½
 public List selectDept() {
-	List list = new ArrayList<Dept>();				//¶¨ÒåList¼¯ºÏ¶ÔÏó
-	conn = connection.getCon();						//»ñÈ¡Êý¾Ý¿âÁ¬½Ó
+	List list = new ArrayList<Dept>();				//ï¿½ï¿½ï¿½ï¿½Listï¿½ï¿½ï¿½Ï¶ï¿½ï¿½ï¿½
+	conn = connection.getCon();						//ï¿½ï¿½È¡ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½ï¿½ï¿½
 	try {
-		Statement statement = conn.createStatement();		//»ñÈ¡Statement·½·¨
-		ResultSet rest = statement.executeQuery("select * from tb_dept");	//Ö´ÐÐ²éÑ¯Óï¾ä»ñÈ¡²éÑ¯½á¹û¼¯
-		while (rest.next()) {						//Ñ­»·±éÀú²éÑ¯½á¹û¼¯
+		Statement statement = conn.createStatement();		//ï¿½ï¿½È¡Statementï¿½ï¿½ï¿½ï¿½
+		ResultSet rest = statement.executeQuery("select * from tb_dept");	//Ö´ï¿½Ð²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½
+		int i = 1;
+		while (rest.next()) {						//Ñ­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½
 			Dept dept = new Dept();
-			dept.setId(rest.getInt(1));				//Ó¦ÓÃ²éÑ¯½á¹ûÉèÖÃ¶ÔÏóÊôÐÔ
+			dept.setId(rest.getInt(1));				//Ó¦ï¿½Ã²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			dept.setdName(rest.getString(2));
 			dept.setPrincipal(rest.getString(3));
 			dept.setBewrite(rest.getString(4));
-			list.add(dept);							//½«¶ÔÏóÌí¼Óµ½¼¯ºÏÖÐ
-		}		
+			dept.setIndexNumber(i++);
+			list.add(dept);							//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Óµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		}
 	} catch (SQLException e) {
 		e.printStackTrace();
 	}
 	return list;
 }
 
-	// ±àÐ´°´±àºÅ²éÑ¯²¿ÃÅÐÅÏ¢·½·¨
+	// ï¿½ï¿½Ð´ï¿½ï¿½ï¿½ï¿½Å²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½
 	public Dept selectDeptByid(int id) {
 		Dept dept = new Dept();
 		conn = connection.getCon();
@@ -69,7 +71,7 @@ public List selectDept() {
 		}
 		return dept;
 	}
-	//±àÐ´°´ÕÕ²¿ÃÅÃû³Æ²éÑ¯²¿ÃÅ±àºÅ·½·¨
+	//ï¿½ï¿½Ð´ï¿½ï¿½ï¿½Õ²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ²ï¿½Ñ¯ï¿½ï¿½ï¿½Å±ï¿½Å·ï¿½ï¿½ï¿½
 	public int selectDeptIdByName(String name) {
 		int id = 0;
 		conn = connection.getCon();
@@ -86,17 +88,17 @@ public List selectDept() {
 		return id;
 	}
 
-	// ¶¨Òå°´²¿ÃÅÃû³Æ²éÑ¯²¿ÃÅÐÅÏ¢·½·¨
+	// ï¿½ï¿½ï¿½å°´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½
 public Dept selectDeptByName(String name) {		
-	conn = connection.getCon();			//»ñÈ¡Êý¾Ý¿âÁ¬½Ó
+	conn = connection.getCon();			//ï¿½ï¿½È¡ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½ï¿½ï¿½
 	Dept dept = null;
 	try {
-		Statement statement = conn.createStatement();		//ÊµÀý»¯Statement¶ÔÏó
-		String sql = "select * from tb_dept where dName = '" + name +"'";	//¶¨Òå°´²¿ÃÅÃû³Æ²éÑ¯²¿ÃÅÐÅÏ¢SQLÓï¾ä
-		ResultSet rest = statement.executeQuery(sql);		//Ö´ÐÐ²éÑ¯Óï¾ä»ñÈ¡²éÑ¯½á¹û¼¯	
-		while (rest.next()) {		//Ñ­»·±éÀú²éÑ¯½á¹û¼¯
-			dept = new Dept();					//¶¨ÒåÓë²¿ÃÅ±í¶ÔÓ¦µÄJavaBean¶ÔÏó
-			dept.setId(rest.getInt(1));			//Ó¦ÓÃ²éÑ¯½á¹ûÉèÖÃ¶ÔÏóÊôÐÔ
+		Statement statement = conn.createStatement();		//Êµï¿½ï¿½ï¿½ï¿½Statementï¿½ï¿½ï¿½ï¿½
+		String sql = "select * from tb_dept where dName = '" + name +"'";	//ï¿½ï¿½ï¿½å°´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢SQLï¿½ï¿½ï¿½
+		ResultSet rest = statement.executeQuery(sql);		//Ö´ï¿½Ð²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½	
+		while (rest.next()) {		//Ñ­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½
+			dept = new Dept();					//ï¿½ï¿½ï¿½ï¿½ï¿½ë²¿ï¿½Å±ï¿½ï¿½Ó¦ï¿½ï¿½JavaBeanï¿½ï¿½ï¿½ï¿½
+			dept.setId(rest.getInt(1));			//Ó¦ï¿½Ã²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			dept.setdName(rest.getString(2));
 			dept.setPrincipal(rest.getString(3));
 			dept.setBewrite(rest.getString(4));
@@ -104,9 +106,9 @@ public Dept selectDeptByName(String name) {
 	} catch (SQLException e) {
 		e.printStackTrace();
 	}
-	return dept;					//·µ»ØJavaBean¶ÔÏó
+	return dept;					//ï¿½ï¿½ï¿½ï¿½JavaBeanï¿½ï¿½ï¿½ï¿½
 }
-	// ¶¨Òå°´¸ºÔðÈË²éÑ¯²¿ÃÅÐÅÏ¢·½·¨
+	// ï¿½ï¿½ï¿½å°´ï¿½ï¿½ï¿½ï¿½ï¿½Ë²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½
 	public Dept selectDeptByPrincipal(String manage) {		
 		conn = connection.getCon();
 		Dept dept =null ;
@@ -127,7 +129,7 @@ public Dept selectDeptByName(String name) {
 		return dept;
 	}
 
-	// ¶¨Òå°´²¿ÃÅ±àºÅ²éÑ¯²¿ÃÅÐÅÏ¢·½·¨
+	// ï¿½ï¿½ï¿½å°´ï¿½ï¿½ï¿½Å±ï¿½Å²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½
 	public Dept selectDepotById(int id) {		
 		conn = connection.getCon();
 		Dept dept = new Dept();
@@ -147,7 +149,7 @@ public Dept selectDeptByName(String name) {
 		return dept;
 	}
 
-	// ¶¨ÒåÐÞ¸Ä²¿ÃÅÐÅÏ¢·½·¨
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Þ¸Ä²ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½
 	public void updateDept(Dept dept) {
 		conn = connection.getCon();
 		try {
@@ -163,7 +165,7 @@ public Dept selectDeptByName(String name) {
 		}
 	}
 
-	// ¶¨ÒåÉ¾³ý²¿ÃÅÐÅÏ¢·½·¨
+	// ï¿½ï¿½ï¿½ï¿½É¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½
 	public void deleteDept(int id){
 		conn = connection.getCon();
 		String sql = "delete from tb_dept where id ="+id;
