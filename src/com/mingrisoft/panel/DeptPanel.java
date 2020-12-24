@@ -87,13 +87,13 @@ public class DeptPanel extends JPanel {
 				if(condition.equals("部门名称")){					
 					Dept dept = dao.selectDeptByName(joinDate);
 					if(dept!=null){
-					model.addRow(new Object[] {dept.getId(),dept.getdName(),dept.getPrincipal(),dept.getBewrite()});
+					model.addRow(new Object[] {dept.getIndexNumber(),dept.getdName(),dept.getPrincipal(),dept.getBewrite(),dept.getId()});
 					}
 				}
 				if(condition.equals("负责人")){
 					Dept dept = dao.selectDeptByPrincipal(joinDate);
 					if(dept!=null){
-						model.addRow(new Object[] {dept.getId(),dept.getdName(),dept.getPrincipal(),dept.getBewrite()});
+						model.addRow(new Object[] {dept.getIndexNumber(),dept.getdName(),dept.getPrincipal(),dept.getBewrite(),dept.getId()});
 					}
 				}
 				
@@ -112,7 +112,7 @@ public class DeptPanel extends JPanel {
 		for (int i = 0; i < list.size(); i++) {
 			Dept dept = (Dept)list.get(i);
 			System.out.println(dept);
-			model.addRow(new Object[] {dept.getIndexNumber(),dept.getdName(),dept.getPrincipal(),dept.getBewrite()});
+			model.addRow(new Object[] {dept.getIndexNumber(),dept.getdName(),dept.getPrincipal(),dept.getBewrite(),dept.getId()});
 		}
 		scrollPane.setViewportView(table_1);
 		JButton insertButton = new JButton("添加");
@@ -161,7 +161,7 @@ public class DeptPanel extends JPanel {
 							"信息提示框", JOptionPane.INFORMATION_MESSAGE);
 					return;
 				} else {
-					String column =	model.getValueAt(row, 0).toString();
+					String column = model.getValueAt(row, 4).toString();
 					dao.deleteDept(Integer.parseInt(column));
 					JOptionPane.showMessageDialog(getParent(), "数据删除成功！",
 							"信息提示框", JOptionPane.INFORMATION_MESSAGE);
