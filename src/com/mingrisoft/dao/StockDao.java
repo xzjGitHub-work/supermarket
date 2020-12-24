@@ -15,25 +15,25 @@ public class StockDao {
 
 	GetConnection connection = new GetConnection();
 	Connection conn = null;
-	// ¶¨ÒåÌí¼Ó²É¹º¶©»õ·½·¨
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó²É¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 public void insertStock(Stock stock) {
-	conn = connection.getCon();			//»ñÈ¡Êý¾Ý¿âÁ¬½Ó
+	conn = connection.getCon();			//ï¿½ï¿½È¡ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½ï¿½ï¿½
 	try {
 		PreparedStatement statement = conn
-				.prepareStatement("insert into tb_stock values(?,?,?,?,?,?)");	//¶¨Òå²éÑ¯Êý¾ÝµÄSQLÓï¾ä
-		statement.setString(1,stock.getsName());			//ÉèÖÃÔ¤´¦ÀíÓï¾ä²ÎÊý
+				.prepareStatement("insert into tb_stock (sName,orderId,consignmentDate,baleName,count,money) values(?,?,?,?,?,?)");
+		statement.setString(1,stock.getsName());
 		statement.setString(2,stock.getOrderId());			
 		statement.setString(3,stock.getConsignmentDate());
 		statement.setString(4,stock.getBaleName());
 		statement.setString(5,stock.getCount());
 		statement.setFloat(6,stock.getMoney());			
-		statement.executeUpdate();							//Ö´ÐÐ²åÈë²Ù×÷
+		statement.executeUpdate();							//Ö´ï¿½Ð²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	} catch (SQLException e) {
 		e.printStackTrace();
 	}
 }
 
-	// ¶¨Òå²éÑ¯²É¹º¶©»õ±íÖÐÈ«²¿Êý¾Ý·½·¨
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¯ï¿½É¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È«ï¿½ï¿½ï¿½ï¿½ï¿½Ý·ï¿½ï¿½ï¿½
 	public List selectStock() {
 		List list = new ArrayList<Sell>();
 		conn = connection.getCon();
@@ -57,7 +57,7 @@ public void insertStock(Stock stock) {
 
 		return list;
 	}
-	// ¶¨Òå¶©µ¥ºÅ²éÑ¯²Ö¿âÈë¿â±íÊý¾Ý·½·¨
+	// ï¿½ï¿½ï¿½å¶©ï¿½ï¿½ï¿½Å²ï¿½Ñ¯ï¿½Ö¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý·ï¿½ï¿½ï¿½
 	public int selectJoinStockByOid(String oid) {
 		List list = new ArrayList<Sell>();
 		conn = connection.getCon();
@@ -74,31 +74,31 @@ public void insertStock(Stock stock) {
 
 		return id;
 	}
-	// ¶¨Òå°´»õÆ·Ãû²éÑ¯¶©µ¥±íÊý¾Ý·½·¨
+	// ï¿½ï¿½ï¿½å°´ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý·ï¿½ï¿½ï¿½
 public List selectStockBySName(String sName) {
-	List list = new ArrayList<Stock>();			//¶¨Òå±£´æ²éÑ¯½á¹ûµÄList¶ÔÏó
-	conn = connection.getCon();					//»ñÈ¡Êý¾Ý¿âÁ¬½Ó
+	List list = new ArrayList<Stock>();			//ï¿½ï¿½ï¿½å±£ï¿½ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½Listï¿½ï¿½ï¿½ï¿½
+	conn = connection.getCon();					//ï¿½ï¿½È¡ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½ï¿½ï¿½
 	int id = 0;
 	try {
-		Statement statement = conn.createStatement();	//ÊµÀý»¯Statement¶ÔÏó
-		ResultSet rest = statement.executeQuery("select * from tb_stock where sName ='"+sName+"'");	//¶¨Òå²éÑ¯Óï¾ä£¬»ñÈ¡²éÑ¯½á¹û¼¯
-		while (rest.next()) {					//Ñ­»·±éÀú²éÑ¯½á¹û¼¯
-			Stock stock = new Stock();			//¶¨ÒåÓëÊý¾Ý±í¶ÔÏóµÄJavaBean¶ÔÏó
-			stock.setId(rest.getInt(1));		//Ó¦ÓÃ²éÑ¯½á¹ûÉèÖÃJavaBeanÊôÐÔ
+		Statement statement = conn.createStatement();	//Êµï¿½ï¿½ï¿½ï¿½Statementï¿½ï¿½ï¿½ï¿½
+		ResultSet rest = statement.executeQuery("select * from tb_stock where sName ='"+sName+"'");	//ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¯ï¿½ï¿½ä£¬ï¿½ï¿½È¡ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½
+		while (rest.next()) {					//Ñ­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½
+			Stock stock = new Stock();			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý±ï¿½ï¿½ï¿½ï¿½ï¿½JavaBeanï¿½ï¿½ï¿½ï¿½
+			stock.setId(rest.getInt(1));		//Ó¦ï¿½Ã²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½JavaBeanï¿½ï¿½ï¿½ï¿½
 			stock.setsName(rest.getString(2));
 			stock.setOrderId(rest.getString(3));
 			stock.setConsignmentDate(rest.getString(4));
 			stock.setBaleName(rest.getString(5));
 			stock.setCount(rest.getString(6));
 			stock.setMoney(rest.getFloat(7));
-			list.add(stock);					//½«JavaBean¶ÔÏóÌí¼Óµ½¼¯ºÏ
+			list.add(stock);					//ï¿½ï¿½JavaBeanï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Óµï¿½ï¿½ï¿½ï¿½ï¿½
 		}
 	} catch (SQLException e) {
 		e.printStackTrace();
 	}
-	return list;								//·µ»Ø²éÑ¯¼¯ºÏ
+	return list;								//ï¿½ï¿½ï¿½Ø²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½
 }
-	// ¶¨Òå°´¶©µ¥ºÅ²éÑ¯¶©µ¥±íÊý¾Ý·½·¨
+	// ï¿½ï¿½ï¿½å°´ï¿½ï¿½ï¿½ï¿½ï¿½Å²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý·ï¿½ï¿½ï¿½
 	public List selectStockByOid(String oId) {
 		List list = new ArrayList<Stock>();
 		conn = connection.getCon();
@@ -122,7 +122,7 @@ public List selectStockBySName(String sName) {
 		}
 		return list;
 	}
-	// ¶¨Òå°´¶©»õÈÕÆÚ²éÑ¯¶©µ¥±íÊý¾Ý·½·¨
+	// ï¿½ï¿½ï¿½å°´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý·ï¿½ï¿½ï¿½
 	public List selectStockByDate(String cDate) {
 		List list = new ArrayList<Stock>();
 		conn = connection.getCon();
@@ -146,16 +146,16 @@ public List selectStockBySName(String sName) {
 		}
 		return list;
 	}
-	// ±àÐ´°´±àºÅ²éÑ¯¶©»õÐÅÏ¢·½·¨
+	// ï¿½ï¿½Ð´ï¿½ï¿½ï¿½ï¿½Å²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½
 public Stock selectStockByid(int id) {
-	Stock stock = new Stock();		//¶¨Òå¶ÔÓëÊý¾Ý¿â¶ÔÓ¦µÄJavaBean¶ÔÏó
-	conn = connection.getCon();		//»ñÈ¡Êý¾Ý¿âÁ¬½Ó
+	Stock stock = new Stock();		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½Ó¦ï¿½ï¿½JavaBeanï¿½ï¿½ï¿½ï¿½
+	conn = connection.getCon();		//ï¿½ï¿½È¡ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½ï¿½ï¿½
 	try {
 		Statement statement = conn.createStatement();
-		String sql = "select * from tb_stock where id = " + id;		//¶¨Òå²éÑ¯SQLÓï¾ä
-		ResultSet rest = statement.executeQuery(sql);				//Ö´ÐÐ²éÑ¯Óï¾ä»ñÈ¡²éÑ¯½á¹û¼¯
-		while (rest.next()) {		//Ñ­»·±éÀú²éÑ¯½á¹û¼¯
-			stock.setId(id);									//Ó¦ÓÃ²éÑ¯½á¹ûÉèÖÃ¶ÔÏóÊôÐÔ
+		String sql = "select * from tb_stock where id = " + id;		//ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¯SQLï¿½ï¿½ï¿½
+		ResultSet rest = statement.executeQuery(sql);				//Ö´ï¿½Ð²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½
+		while (rest.next()) {		//Ñ­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½
+			stock.setId(id);									//Ó¦ï¿½Ã²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			stock.setsName(rest.getString(2));
 			stock.setOrderId(rest.getString(3));
 			stock.setConsignmentDate(rest.getString(4));
@@ -166,37 +166,37 @@ public Stock selectStockByid(int id) {
 	} catch (SQLException e) {
 		e.printStackTrace();
 	}
-	return stock;						//·µ»ØStock¶ÔÏó
+	return stock;						//ï¿½ï¿½ï¿½ï¿½Stockï¿½ï¿½ï¿½ï¿½
 }
 
 	
-	// ¶¨ÒåÐÞ¸Ä¹©Ó¦ÉÌÐÅÏ¢·½·¨
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Þ¸Ä¹ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½
 public void updateStock(Stock stock) {
-	conn = connection.getCon();					//»ñÈ¡Êý¾Ý¿âÁ¬½Ó
+	conn = connection.getCon();					//ï¿½ï¿½È¡ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½ï¿½ï¿½
 	try {
 		String sql = "update tb_stock set sName=?,orderId=?,consignmentDate=?," +
-				"baleName=?,count=?,money=? where id =?";			//¶¨ÒåÐÞ¸ÄÊý¾Ý±í·½·¨
-		PreparedStatement statement = conn.prepareStatement(sql);	//»ñÈ¡PreparedStatement¶ÔÏó
-		statement.setString(1, stock.getsName());					//ÉèÖÃÔ¤´¦ÀíÓï¾ä²ÎÊýÖµ
+				"baleName=?,count=?,money=? where id =?";			//ï¿½ï¿½ï¿½ï¿½ï¿½Þ¸ï¿½ï¿½ï¿½ï¿½Ý±ï¿½ï¿½ï¿½
+		PreparedStatement statement = conn.prepareStatement(sql);	//ï¿½ï¿½È¡PreparedStatementï¿½ï¿½ï¿½ï¿½
+		statement.setString(1, stock.getsName());					//ï¿½ï¿½ï¿½ï¿½Ô¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ
 		statement.setString(2, stock.getOrderId());
 		statement.setString(3, stock.getConsignmentDate());
 		statement.setString(4, stock.getBaleName());
 		statement.setString(5, stock.getCount());
 		statement.setFloat(6, stock.getMoney());
 		statement.setInt(7, stock.getId());
-		statement.executeUpdate();									//Ö´ÐÐ¸üÐÂÓï¾ä
+		statement.executeUpdate();									//Ö´ï¿½Ð¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	} catch (SQLException e) {
 		e.printStackTrace();
 	}
 }
 
-	// ¶¨ÒåÉ¾³ý¹©Ó¦ÉÌÐÅÏ¢·½·¨
+	// ï¿½ï¿½ï¿½ï¿½É¾ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½
 public void deleteStock(int id){
-	conn = connection.getCon();							//»ñÈ¡Êý¾Ý¿âÁ¬½Ó
-	String sql = "delete from tb_stock where id ="+id;	//¶¨ÒåÉ¾³ýÊý¾ÝSQLÓï¾ä
+	conn = connection.getCon();							//ï¿½ï¿½È¡ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½ï¿½ï¿½
+	String sql = "delete from tb_stock where id ="+id;	//ï¿½ï¿½ï¿½ï¿½É¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½SQLï¿½ï¿½ï¿½
 	try {
-		Statement statement = conn.createStatement();	//ÊµÀý»¯Statement¶ÔÏó
-		statement.executeUpdate(sql);					//Ö´ÐÐSQLÓï¾ä
+		Statement statement = conn.createStatement();	//Êµï¿½ï¿½ï¿½ï¿½Statementï¿½ï¿½ï¿½ï¿½
+		statement.executeUpdate(sql);					//Ö´ï¿½ï¿½SQLï¿½ï¿½ï¿½
 	} catch (SQLException e) {			
 		e.printStackTrace();
 	}		

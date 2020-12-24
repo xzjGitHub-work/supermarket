@@ -168,7 +168,7 @@ public Dept selectDeptByName(String name) {
 	// ����ɾ��������Ϣ����
 	public void deleteDept(int id){
 		conn = connection.getCon();
-		String sql = "delete from tb_dept where id ="+id;
+		String sql = "delete from tb_dept where id = "+id;
 		try {
 			Statement statement = conn.createStatement();
 			statement.executeUpdate(sql);
