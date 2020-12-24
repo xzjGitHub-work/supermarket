@@ -111,8 +111,7 @@ public class DeptPanel extends JPanel {
 		List list = dao.selectDept();
 		for (int i = 0; i < list.size(); i++) {
 			Dept dept = (Dept)list.get(i);
-			System.out.println(dept);
-			model.addRow(new Object[] {dept.getIndexNumber(),dept.getdName(),dept.getPrincipal(),dept.getBewrite(),dept.getId()});
+			model.addRow(new Object[] { i+1 ,dept.getdName(),dept.getPrincipal(),dept.getBewrite(),dept.getId()});
 		}
 		scrollPane.setViewportView(table_1);
 		JButton insertButton = new JButton("添加");
@@ -127,7 +126,8 @@ public class DeptPanel extends JPanel {
 		JButton updateButton = new JButton("修改");
 		updateButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int row = table_1.getSelectedRow();  				
+				UpdateDeptFrame.id =model.getValueAt(table_1.getSelectedRow(), 4).toString();
+				int row = table_1.getSelectedRow();
 				if (row < 0) {
 					JOptionPane.showMessageDialog(getParent(), "没有选择要修改的数据！",
 							"信息提示框", JOptionPane.INFORMATION_MESSAGE);

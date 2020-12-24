@@ -36,6 +36,7 @@ public class UpdateDeptFrame extends JFrame {
 	private JLabel starLabel;
 	JTextArea textArea = new JTextArea();
 	private JTextField managerTextField;
+	public static String id = "";
 	Dept dept = new Dept();
 	DeptDao dao = new DeptDao();	
 
@@ -84,7 +85,8 @@ public class UpdateDeptFrame extends JFrame {
 					JOptionPane.showMessageDialog(getContentPane(), "将带星号的信息填写完整！",
 							"信息提示框", JOptionPane.INFORMATION_MESSAGE);
 					return;
-				}				
+				}
+				dept.setId(Integer.parseInt(id));
 				dept.setdName(dName);
 				dept.setPrincipal(manager);
 				dept.setBewrite(textArea.getText());

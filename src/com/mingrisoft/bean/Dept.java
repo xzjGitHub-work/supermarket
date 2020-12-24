@@ -5,7 +5,9 @@ public class Dept {
 	private String dName;
 	private String principal;
 	private String bewrite;
+	//Ë÷Òý
 	private int indexNumber;
+
 	public int getId() {
 		return id;
 	}
